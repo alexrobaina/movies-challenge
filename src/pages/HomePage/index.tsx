@@ -8,8 +8,8 @@ export const HomePage = () => {
   const navigate = useNavigate()
 
   return (
-    <main className="flex flex-col items-center justify-center gap-12">
-      <h1 className="text-4xl md:text-5xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-yellow-400">
+    <main className="flex flex-col items-center justify-center gap-12 h-full">
+      <h1 className="text-4xl md:text-5xl mt-20 font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-yellow-400">
         Welcome to Entertainment Hub
       </h1>
 
