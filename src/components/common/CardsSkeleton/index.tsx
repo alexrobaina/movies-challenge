@@ -1,7 +1,10 @@
 export const CardsSkeleton = () => {
   const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div
+      data-testid="cards-skeleton"
+      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
       {cards.map((item) => (
         <div
           key={item}
