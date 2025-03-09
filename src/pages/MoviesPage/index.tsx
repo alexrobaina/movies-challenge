@@ -1,35 +1,34 @@
 import { useState } from 'react'
-import { useGetSeries } from '../../hooks/useGetSeries'
+import { useGetMovies } from '../../hooks/useGetMovies'
 import { MediaGrid } from '../../components/common/MediaGrid'
 import { BaseButton } from '../../components/common/BaseButton'
 import { MediaModal } from '../../components/common/MediaModal'
 import { MediaTypes } from '../../types/contants'
 
-export const SeriesPage = () => {
+export const MoviesPage = () => {
   const [limit, setLimit] = useState(20)
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [serieSelected, setSerieSelected] = useState<MediaTypes | null>(null)
-  const { series, isLoading, error, hasMore } = useGetSeries(search, limit)
+  const [movieSelected, setMovieSelected] = useState<MediaTypes | null>(null)
+  const { movies, isLoading, error, hasMore } = useGetMovies(search, limit)
 
-  const handleOpenModal = (serie: MediaTypes) => {
+  const handleOpenModal = (movie: MediaTypes) => {
     setIsModalOpen(true)
-    setSerieSelected(serie)
+    setMovieSelected(movie)
   }
 
   return (
     <>
       <MediaGrid
         error={error}
-        mediaItems={series}
+        mediaItems={movies}
         onSearch={setSearch}
         isLoading={isLoading}
         setMediaItem={handleOpenModal}
-        title="Discover Amazing Series"
+        title="Discover Amazing Movies"
         onLoadMore={() => setLimit(limit + 20)}
-        subtitle="Explore our curated collection of binge-worthy shows, drama series, and exclusive content. Your next favorite series is waiting to be discovered."
+        subtitle="Explore our curated collection of blockbusters, indie gems, and timeless classics. Your next favorite movie is waiting to be discovered."
       />
-
       {hasMore && (
         <div className="flex justify-center mt-12">
           <BaseButton
@@ -42,7 +41,7 @@ export const SeriesPage = () => {
 
       <MediaModal
         isOpen={isModalOpen}
-        media={serieSelected}
+        media={movieSelected}
         closeModal={() => setIsModalOpen(false)}
       />
     </>

@@ -1,5 +1,4 @@
 import { ChangeEvent, FC, ReactElement } from 'react'
-import { IconSearch } from 'assets/icons'
 
 interface BaseInputProps {
   name?: string
@@ -20,19 +19,19 @@ interface BaseInputProps {
 const baseInputClasses = `
   block 
   w-full 
-  h-10 
+  h-14
   rounded-[4px] 
   border-0 
   py-1.5 
-  text-gray-900 
+  text-gray-50 
   ring-1 
   ring-inset 
   ring-gray-400 
   outline-none
-  placeholder:text-neutral-500 
-  placeholder:text-sm 
-  focus:ring-primary-300 
-  sm:text-sm 
+  placeholder:text-base 
+  placeholder:text-neutral-400 
+  focus:ring-indigo-300 
+  sm:text-base 
   sm:leading-6 
   pl-3
 `
@@ -43,7 +42,6 @@ export const BaseInput: FC<BaseInputProps> = ({
   label,
   error,
   onBlur,
-  isSearch,
   iconLeft,
   iconRight,
   helperText,
@@ -53,11 +51,7 @@ export const BaseInput: FC<BaseInputProps> = ({
   type = 'text',
   ...props
 }) => {
-  const inputClasses = [
-    baseInputClasses,
-    error && 'ring-red-500',
-    iconLeft && 'pl-9',
-  ]
+  const inputClasses = [baseInputClasses, error && 'ring-red-500']
     .filter(Boolean)
     .join(' ')
 
@@ -66,7 +60,7 @@ export const BaseInput: FC<BaseInputProps> = ({
       {label && (
         <label
           htmlFor={name}
-          className="block text-sm font-medium leading-6 text-gray-800"
+          className="block text-sm font-medium leading-6 text-gray-50"
         >
           {label}
         </label>
@@ -94,12 +88,6 @@ export const BaseInput: FC<BaseInputProps> = ({
       {iconRight && (
         <div className="absolute right-2.5 top-1/2 -translate-y-1/2">
           {iconRight}
-        </div>
-      )}
-
-      {isSearch && (
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 bg-primary-500 p-2.5 rounded-[4px]">
-          <IconSearch className="size-5 text-white" />
         </div>
       )}
 

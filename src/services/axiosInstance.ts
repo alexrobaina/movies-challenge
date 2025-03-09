@@ -4,12 +4,12 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios'
 
+const API_URL = 'https://api.npoint.io'
+
 // Add a request interceptor
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // if (token) {
-    //   config.headers['Authorization'] = `Bearer ${token}`
-    // }
+    config.url = `${API_URL}${config.url}`
 
     return config
   },
