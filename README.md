@@ -106,14 +106,6 @@ The project is organized into the following directories:
 
 #
 
-Here's the translation into English:
-
----
-
-Here's the translation into English:
-
----
-
 ## 🤔 Technical and Architectural Decisions
 
 ### Chosen Technologies
