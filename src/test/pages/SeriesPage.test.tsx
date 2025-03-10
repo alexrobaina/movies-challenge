@@ -34,6 +34,9 @@ describe('SeriesPage', () => {
       isLoading: false,
       error: null,
       hasMore: false,
+      total: 2,
+      totalPages: 1,
+      currentPage: 1,
     })
     renderWithRouter(<SeriesPage />)
 
@@ -47,6 +50,9 @@ describe('SeriesPage', () => {
       isLoading: true,
       error: null,
       hasMore: false,
+      total: 0,
+      totalPages: 0,
+      currentPage: 0,
     })
 
     renderWithRouter(<SeriesPage />)
@@ -59,6 +65,9 @@ describe('SeriesPage', () => {
       isLoading: false,
       error: new Error('Test error'),
       hasMore: false,
+      total: 0,
+      totalPages: 0,
+      currentPage: 0,
     })
 
     renderWithRouter(<SeriesPage />)
@@ -71,6 +80,9 @@ describe('SeriesPage', () => {
       isLoading: false,
       error: null,
       hasMore: false,
+      total: 2,
+      totalPages: 1,
+      currentPage: 1,
     })
 
     renderWithRouter(<SeriesPage />)
