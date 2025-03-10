@@ -1,6 +1,6 @@
 // src/test/components/common/BaseButton/BaseButton.test.tsx
 import { render, screen } from '@testing-library/react'
-import { BaseButton } from '../../../../components/common/BaseButton'
+import { BaseButton } from '../../../components/common/BaseButton'
 import userEvent from '@testing-library/user-event'
 
 describe('BaseButton Component', () => {

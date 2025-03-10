@@ -1,6 +1,6 @@
 import { vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { MediaModal } from '../../../../components/common/MediaModal'
+import { MediaModal } from '../../../components/common/MediaModal'
 
 // Mock ReactModal component
 vi.mock('../../../../components/common/ReactModal', () => ({

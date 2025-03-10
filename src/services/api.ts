@@ -1,69 +1,79 @@
-import axios from './axiosInstance' // Adjust your import as needed
+import axios from 'axios'
 
 const API_URL = '/546fd85e8651aa8e648a'
 
-export const getMovies = async (filters?: {
-  search?: string
-  limit?: number
-}) => {
-  const { data } = await axios.get(API_URL)
-
-  let movies = data.entries
-
-  // Filter movies only
-  movies = movies.filter(
-    (item: { programType: string }) => item.programType === 'movie',
+export const getMovies = async (
+  search: string,
+  page: number,
+  limit: number,
+  year?: number,
+) => {
+  const response = await axios.get(API_URL)
+  let movies = response.data.entries.filter(
+    (movie: { programType: string }) => movie.programType === 'movie',
   )
 
-  // Filter by search query if provided
-  if (filters?.search) {
-    movies = movies.filter((item: { title: string }) =>
-      item.title.toLowerCase().includes(filters.search!.toLowerCase()),
+  // Apply search filter if exists
+  if (search) {
+    movies = movies.filter((movie: { title: string }) =>
+      movie.title.toLowerCase().includes(search.toLowerCase()),
     )
   }
 
-  // Sort movies by title
-  movies.sort((a: { title: string }, b: { title: string }) =>
-    a.title.localeCompare(b.title),
-  )
-
-  // Apply limit if provided
-  if (filters?.limit) {
-    movies = movies.slice(0, filters.limit)
+  // Apply year filter if exists
+  if (year) {
+    movies = movies.filter(
+      (movie: { releaseYear: number }) => movie.releaseYear === year,
+    )
   }
 
-  return movies
+  // Calculate pagination
+  const startIndex = (page - 1) * limit
+  const endIndex = startIndex + limit
+  const paginatedMovies = movies.slice(startIndex, endIndex)
+
+  return {
+    movies: paginatedMovies,
+    total: movies.length,
+    currentPage: page,
+    totalPages: Math.ceil(movies.length / limit),
+  }
 }
 
-export const getSeries = async (filters?: {
-  search?: string
-  limit?: number
-}) => {
-  const { data } = await axios.get(API_URL)
-
-  let series = data.entries
-
-  // Filter series only
-  series = series.filter(
-    (item: { programType: string }) => item.programType === 'series',
+export const getSeries = async (
+  search: string,
+  page: number,
+  limit: number,
+  year?: number,
+) => {
+  const response = await axios.get(API_URL)
+  let series = response.data.entries.filter(
+    (serie: { programType: string }) => serie.programType === 'series',
   )
 
-  // Filter by search query if provided
-  if (filters?.search) {
-    series = series.filter((item: { title: string }) =>
-      item.title.toLowerCase().includes(filters.search!.toLowerCase()),
+  // Apply search filter if exists
+  if (search) {
+    series = series.filter((serie: { title: string }) =>
+      serie.title.toLowerCase().includes(search.toLowerCase()),
     )
   }
 
-  // Sort series by title
-  series.sort((a: { title: string }, b: { title: string }) =>
-    a.title.localeCompare(b.title),
-  )
-
-  // Apply limit if provided
-  if (filters?.limit) {
-    series = series.slice(0, filters.limit)
+  // Apply year filter if exists
+  if (year) {
+    series = series.filter(
+      (serie: { releaseYear: number }) => serie.releaseYear === year,
+    )
   }
 
-  return series
+  // Calculate pagination
+  const startIndex = (page - 1) * limit
+  const endIndex = startIndex + limit
+  const paginatedSeries = series.slice(startIndex, endIndex)
+
+  return {
+    series: paginatedSeries,
+    total: series.length,
+    currentPage: page,
+    totalPages: Math.ceil(series.length / limit),
+  }
 }
