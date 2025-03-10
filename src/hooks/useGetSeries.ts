@@ -1,16 +1,24 @@
 import { useQuery } from '@tanstack/react-query'
 import { getSeries } from '../services/api'
 
-export const useGetSeries = (search?: string, limit?: number) => {
+export const useGetSeries = (
+  search: string,
+  page: number,
+  limit: number,
+  year?: number,
+) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['series', search, limit],
-    queryFn: () => getSeries({ search, limit }),
+    queryKey: ['series', search, page, limit, year],
+    queryFn: () => getSeries(search, page, limit, year),
   })
 
   return {
     error,
     isLoading,
-    series: data,
-    hasMore: data?.length === limit,
+    total: data?.total || 0,
+    series: data?.series || [],
+    totalPages: data?.totalPages || 1,
+    currentPage: data?.currentPage || 1,
+    hasMore: data ? data.currentPage < data.totalPages : false,
   }
 }

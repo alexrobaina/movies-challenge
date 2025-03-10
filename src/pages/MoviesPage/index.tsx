@@ -1,43 +1,66 @@
 import { useState } from 'react'
 import { useGetMovies } from '../../hooks/useGetMovies'
 import { MediaGrid } from '../../components/common/MediaGrid'
-import { BaseButton } from '../../components/common/BaseButton'
 import { MediaModal } from '../../components/common/MediaModal'
-import { MediaTypes } from '../../types/contants'
+import { MediaTypes, MOVIES_PAGE_TEXT } from '../../types/contants'
+import { Pagination } from '../../components/common/Pagination'
 
 export const MoviesPage = () => {
   const [limit, setLimit] = useState(20)
   const [search, setSearch] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [selectedYear, setSelectedYear] = useState<number | undefined>()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [movieSelected, setMovieSelected] = useState<MediaTypes | null>(null)
-  const { movies, isLoading, error, hasMore } = useGetMovies(search, limit)
+
+  const { movies, isLoading, error, total } = useGetMovies(
+    search,
+    currentPage,
+    limit,
+    selectedYear,
+  )
 
   const handleOpenModal = (movie: MediaTypes) => {
     setIsModalOpen(true)
     setMovieSelected(movie)
   }
 
+  const handleLimitChange = (newLimit: number) => {
+    setLimit(newLimit)
+    setCurrentPage(1) // Reset to first page when limit changes
+  }
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  const handleYearChange = (year: number | undefined) => {
+    setSelectedYear(year)
+    setCurrentPage(1) // Reset to first page when year changes
+  }
+
   return (
     <>
       <MediaGrid
         error={error}
+        limit={limit}
         mediaItems={movies}
         onSearch={setSearch}
         isLoading={isLoading}
+        selectedYear={selectedYear}
         setMediaItem={handleOpenModal}
-        title="Discover Amazing Movies"
-        onLoadMore={() => setLimit(limit + 20)}
-        subtitle="Explore our curated collection of blockbusters, indie gems, and timeless classics. Your next favorite movie is waiting to be discovered."
+        title={MOVIES_PAGE_TEXT.title}
+        onYearChange={handleYearChange}
+        onLimitChange={handleLimitChange}
+        subtitle={MOVIES_PAGE_TEXT.subtitle}
       />
-      {hasMore && (
-        <div className="flex justify-center mt-12">
-          <BaseButton
-            disabled={isLoading}
-            onClick={() => setLimit(limit + 20)}
-            text={isLoading ? 'Loading...' : 'Load More'}
-          />
-        </div>
-      )}
+
+      <Pagination
+        page={currentPage}
+        take={limit}
+        total={total}
+        setPage={handlePageChange}
+      />
 
       <MediaModal
         isOpen={isModalOpen}

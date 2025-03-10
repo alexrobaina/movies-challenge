@@ -44,7 +44,7 @@ describe('useGetMovies Hook', () => {
   it('fetches movie data correctly', async () => {
     ;(axios.get as jest.Mock).mockResolvedValue({ data: mockedApiResponse })
 
-    const { result } = renderHook(() => useGetMovies('', 20), {
+    const { result } = renderHook(() => useGetMovies('', 1, 20), {
       wrapper: createWrapper(),
     })
 
